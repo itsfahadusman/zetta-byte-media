@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+/* ---------- Design System ---------- */
+
+@theme {
+  --color-ink: #0b0d10;
+  --color-surface: #14171b;
+  --color-surface-2: #1b1f24;
+  --color-signal: #ff5a1f;
+  --color-signal-2: #ff8a4c;
+  --color-line: #262b31;
+  --color-muted: #8a8f98;
+  --color-paper: #f5f3ee;
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+:root {
+  --background: var(--color-ink);
+  --foreground: #ffffff;
+}
+
+/* ---------- Base Styles ---------- */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* ---------- Typography ---------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), sans-serif;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+p {
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+/* ---------- Layout Utilities ---------- */
+
+.container-custom {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+/* ---------- Buttons ---------- */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-signal);
+  color: var(--color-ink);
+  padding: 0.7rem 0.6rem 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.btn-primary:hover {
+  background: var(--color-signal-2);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid var(--color-line);
+  padding: 0.7rem 0.6rem 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-signal);
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  padding: 1.6rem;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-signal);
+}
+
+/* ---------- Signature byte-grid texture ---------- */
+
+.byte-grid {
+  background-image: radial-gradient(var(--color-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ---------- WhatsApp Button ---------- */
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  /* Updated colors using theme variables from the html file */
+  background: var(--matrix);
+  color: var(--obsidian);
+  padding: 16px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Updated shadow using a softer matrix glow instead of flat black */
+  box-shadow: 0 10px 25px rgba(0, 230, 118, 0.25);
+  transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+  z-index: 999;
+}
+
+.whatsapp-float:hover {
+  background: #00ff80;
+  /* Slightly brighter matrix green hover state */
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(0, 230, 118, 0.4);
+}
+
+/* ---------- Images ---------- */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- Links ---------- */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ---------- Selection Color ---------- */
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+
+/* ---------- Accessibility ---------- */
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
