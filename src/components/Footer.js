@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { FaFacebook, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 const COMPANY_LINKS = [
@@ -26,19 +25,6 @@ const SOCIAL_LINKS = [
 const TAGS = ["Fintech", "Management Systems", "Games", "Web Apps"];
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState(null); // "ok" | "err"
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
-      setStatus("err"); return;
-    }
-    setStatus("ok");
-    setEmail("");
-    setTimeout(() => setStatus(null), 4000);
-  };
-
   return (
     <>
       <style>{`
@@ -51,6 +37,7 @@ export default function Footer() {
           --zb-border: rgba(148, 163, 184, 0.12);
           --zb-cyan: #22D3EE;
           --zb-purple: #A855F7;
+          --zb-green: #4ADE80;
           --zb-text: #E5E7EB;
           --zb-muted: #7C8798;
         }
@@ -103,7 +90,7 @@ export default function Footer() {
           margin: 0 auto;
           padding: 4rem 2rem 3rem;
           display: grid;
-          grid-template-columns: 2fr 1fr 1fr 1.6fr;
+          grid-template-columns: 2fr 1fr 1fr 1.3fr;
           gap: 3rem;
         }
         @media (max-width: 1024px) {
@@ -215,62 +202,43 @@ export default function Footer() {
         }
         .footer-nav-link:hover::before { opacity: 1; }
 
-        /* ── Newsletter col ── */
-        .footer-newsletter-form {
+        /* ── Connect / status col ── */
+        .footer-status-panel {
+          background: rgba(255,255,255,0.02);
+          border: 1px solid var(--zb-border);
+          border-radius: 10px;
+          padding: 0.9rem 1rem;
+          margin-bottom: 1.1rem;
+        }
+        .footer-status-row {
           display: flex;
-          gap: 0.5rem;
-          margin-bottom: 1rem;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--zb-green);
         }
-        @media (max-width: 420px) {
-          .footer-newsletter-form { flex-direction: column; }
+        .footer-status-dot {
+          width: 7px; height: 7px;
+          border-radius: 50%;
+          background: var(--zb-green);
+          flex-shrink: 0;
+          animation: footer-pulse 2s infinite;
         }
-        .footer-email-input {
-          flex: 1;
-          background: rgba(255,255,255,0.03);
-          border: 1.5px solid var(--zb-border);
-          border-radius: 8px;
-          padding: 0.65rem 1rem;
-          font-size: 0.85rem;
-          color: var(--zb-text);
-          outline: none;
-          transition: border-color 0.2s, background 0.2s;
-          min-width: 0;
-          font-family: inherit;
+        @keyframes footer-pulse {
+          0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
+          70%  { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
         }
-        .footer-email-input::placeholder { color: var(--zb-muted); }
-        .footer-email-input:focus {
-          border-color: var(--zb-cyan);
-          background: rgba(255,255,255,0.05);
+        .footer-status-meta {
+          margin-top: 0.6rem;
+          font-size: 0.72rem;
+          color: var(--zb-muted);
+          line-height: 1.7;
         }
-        .footer-subscribe-btn {
-          background: linear-gradient(90deg, var(--zb-cyan), var(--zb-purple));
-          color: #05060a;
-          border: none;
-          border-radius: 8px;
-          padding: 0.65rem 1.2rem;
-          font-size: 0.8rem;
-          font-weight: 800;
-          letter-spacing: 0.04em;
-          cursor: pointer;
-          white-space: nowrap;
-          font-family: inherit;
-          transition: filter 0.22s, transform 0.2s;
-        }
-        .footer-subscribe-btn:hover {
-          filter: brightness(1.08);
-          transform: translateY(-1px);
-        }
-
-        /* Feedback messages */
-        .footer-msg {
-          font-size: 0.78rem;
-          font-weight: 600;
-          margin-bottom: 1rem;
-          padding: 0.45rem 0.85rem;
-          border-radius: 7px;
-        }
-        .footer-msg.ok  { background: rgba(52,211,153,0.12); color: #34D399; border: 1px solid rgba(52,211,153,0.3); }
-        .footer-msg.err { background: rgba(220,60,60,0.12);  color: #f87171; border: 1px solid rgba(220,60,60,0.25); }
+        .footer-status-meta b { color: var(--zb-text); }
 
         /* Social icons */
         .footer-socials {
@@ -377,30 +345,19 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* ── Newsletter ── */}
+          {/* ── Connect / status ── */}
           <div>
-            <div className="footer-nav-title">Stay Updated</div>
+            <div className="footer-nav-title">Connect</div>
 
-            {status === "ok" && (
-              <div className="footer-msg ok">✓ Subscribed! Welcome aboard.</div>
-            )}
-            {status === "err" && (
-              <div className="footer-msg err">Please enter a valid email.</div>
-            )}
-
-            <form onSubmit={handleSubscribe} className="footer-newsletter-form" aria-label="Newsletter signup">
-              <input
-                type="email"
-                placeholder="Your email address"
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setStatus(null); }}
-                className="footer-email-input"
-                aria-label="Email address"
-              />
-              <button type="submit" className="footer-subscribe-btn">
-                Subscribe
-              </button>
-            </form>
+            <div className="footer-status-panel">
+              <div className="footer-status-row">
+                <span className="footer-status-dot" aria-hidden="true" />
+                Systems Nominal
+              </div>
+              <div className="footer-status-meta">
+                Uptime <b>99.8%</b> · Build <b>ZBM v2026.07</b>
+              </div>
+            </div>
 
             <div className="footer-socials">
               {SOCIAL_LINKS.map(({ icon, href, label }) => (

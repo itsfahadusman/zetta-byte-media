@@ -1,19 +1,10 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { memo } from "react";
-
 const SERVICES = [
   {
     key: "ledger",
-    goto: "ledger",
-    accent: "#00E676",
     className: "c-ledger",
     title: "Fintech",
     description:
       "Outflow tracking, budget controls, and reporting for people and businesses who need clarity over where money moves.",
-    tags: ["Budgeting", "Multi-currency", "Reporting"],
-    metaLabel: "Open Ledger Grid Pro",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -27,14 +18,10 @@ const SERVICES = [
   },
   {
     key: "salon",
-    goto: "salon",
-    accent: "#22D3EE",
     className: "c-salon",
     title: "Management Systems",
     description:
       "Appointment scheduling, service catalogs, staff allocation, and checkout tools built for service-led businesses.",
-    tags: ["Scheduling", "Staffing", "Checkout"],
-    metaLabel: "Open Elegance Salon",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="3" y="4" width="18" height="17" rx="2" stroke="#22D3EE" strokeWidth="1.6" />
@@ -44,14 +31,10 @@ const SERVICES = [
   },
   {
     key: "arcade",
-    goto: "arcade",
-    accent: "#A855F7",
     className: "c-arcade",
     title: "Games",
     description:
       "Playable, on-brand web experiences — from light interactive moments to full session games with live leaderboards.",
-    tags: ["Interactive", "Web-native", "Leaderboards"],
-    metaLabel: "Open Zetta Arcade",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="3" y="6" width="18" height="12" rx="3" stroke="#A855F7" strokeWidth="1.6" />
@@ -66,9 +49,7 @@ const SERVICES = [
   },
 ];
 
-function Services() {
-  const router = useRouter();
-
+export default function Services() {
   return (
     <>
       <style>{`
@@ -147,7 +128,6 @@ function Services() {
           border: 1px solid var(--zb-border);
           border-radius: 16px;
           padding: 1.8rem 1.6rem;
-          cursor: pointer;
           text-align: left;
           overflow: hidden;
           transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), border-color 0.28s, box-shadow 0.28s;
@@ -205,46 +185,7 @@ function Services() {
           font-size: 0.85rem;
           line-height: 1.7;
           color: var(--zb-muted);
-          margin: 0 0 1.3rem;
-          flex: 1;
-        }
-
-        /* ── Tags ── */
-        .tag-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.45rem;
-          margin-bottom: 1.5rem;
-        }
-        .tag-chip {
-          font-size: 0.62rem;
-          font-weight: 600;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          color: var(--zb-muted);
-          background: rgba(255,255,255,0.04);
-          border: 1px solid var(--zb-border);
-          padding: 0.32rem 0.65rem;
-          border-radius: 999px;
-        }
-
-        /* ── Meta / CTA row ── */
-        .meta {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding-top: 1.1rem;
-          border-top: 1px solid var(--zb-border);
-          font-size: 0.78rem;
-          font-weight: 700;
-          color: var(--card-accent, var(--zb-cyan));
-          letter-spacing: 0.02em;
-        }
-        .arrow {
-          transition: transform 0.25s;
-        }
-        .app-card:hover .arrow {
-          transform: translateX(4px);
+          margin: 0;
         }
       `}</style>
 
@@ -253,35 +194,17 @@ function Services() {
           <div className="eyebrow">What We Do</div>
           <h2 className="section-title">Our Services</h2>
           <p className="lede">
-            Three focused disciplines, one engineering team — each one a fully
-            working product. Tap a card to open it.
+            Three focused disciplines, one engineering team — each one backed
+            by fully working products.
           </p>
         </div>
 
         <div className="card-grid">
-          {SERVICES.map(({ key, goto, className, title, description, tags, metaLabel, icon }) => (
-            <div
-              key={key}
-              className={`app-card ${className}`}
-              role="button"
-              tabIndex={0}
-              onClick={() => router.push(`/${goto}`)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") router.push(`/${goto}`);
-              }}
-            >
+          {SERVICES.map(({ key, className, title, description, icon }) => (
+            <div key={key} className={`app-card ${className}`}>
               <div className="app-icon">{icon}</div>
               <h3>{title}</h3>
               <p>{description}</p>
-              <div className="tag-row">
-                {tags.map((tag) => (
-                  <span key={tag} className="tag-chip">{tag}</span>
-                ))}
-              </div>
-              <div className="meta">
-                <span>{metaLabel}</span>
-                <span className="arrow">→</span>
-              </div>
             </div>
           ))}
         </div>
@@ -289,5 +212,3 @@ function Services() {
     </>
   );
 }
-
-export default memo(Services);
